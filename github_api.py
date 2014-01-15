@@ -30,7 +30,7 @@ class Request(object):
     self.debug = debug
 
   def request(self, req):
-    cached_req, cached_etag, cached_contents = self.req_cache.get_cache(req)
+    cached_req, cached_etag, cached_contents = self.req_cache.get_cache(req) or (None, None, None)
     if cached_contents and self.lazy:
       self.__dbg__('lazy mode, for ' + req + ' returning cached contents')
       return json.loads(cached_contents)
