@@ -87,7 +87,8 @@
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
-				<string>python github.py</string>
+				<string>. ~/.zshrc
+python github.py</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
