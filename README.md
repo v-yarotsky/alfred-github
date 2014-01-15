@@ -12,6 +12,8 @@ Summary
 This alfred extension helps you open github repos in your web browser with a few keystrokes.
 Just type `gh <repo name substring>` and hit Enter.
 
+[Download latest](https://github.com/v-yarotsky/alfred-github/blob/master/build/Github.alfredworkflow?raw=true)
+
 TODO
 ----
 
@@ -21,4 +23,5 @@ TODO
 License
 -------
 
-WTFPL
+[WTFPL](https://github.com/v-yarotsky/alfred-github/blob/master/LICENSE.txt?raw=true)
+
