@@ -30,9 +30,9 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string></string>
+	<string>Vladimir Yarotsky</string>
 	<key>description</key>
-	<string></string>
+	<string>Will help you find your repo</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>

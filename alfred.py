@@ -21,6 +21,8 @@ class Feedback(object):
       item_xml.set('valid', item.valid)
       item_title_xml = ET.SubElement(item_xml, 'title')
       item_title_xml.text = item.title
+      item_icon_xml = ET.SubElement(item_xml, 'icon')
+      item_icon_xml.text = 'repo.png' # One day it'll be owner's avatar
     return ET.tostring(items_xml)
 
 class FeedbackItem(object):
