@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from ctypes import *
 from ctypes import util
 
 security = cdll.LoadLibrary(util.find_library("Security"))
-
 
 class Keychain(object):
     def __init__(self, service):
@@ -15,15 +16,14 @@ class Keychain(object):
         password_length = c_ulong(len(password))
         password = create_string_buffer(password)
         security.SecKeychainAddGenericPassword(
-                    None,
-                    self.service_length,
-                    self.service,
-                    account_length,
-                    account,
-                    password_length,
-                    password,
-                    None
-            )
+            None,
+            self.service_length,
+            self.service,
+            account_length,
+            account,
+            password_length,
+            password,
+            None)
 
     def get_password(self, account):
         account_length = c_ulong(len(account))
@@ -32,19 +32,16 @@ class Keychain(object):
         password = pointer(c_char_p())
 
         security.SecKeychainFindGenericPassword(
-                    None,
-                    self.service_length,
-                    self.service,
-                    account_length,
-                    account,
-                    password_length,
-                    password,
-                    None
-            )
+            None,
+            self.service_length,
+            self.service,
+            account_length,
+            account,
+            password_length,
+            password,
+            None)
 
         length = password_length.contents.value
-        if not password.contents.value:
-          return None
-        else:
-          return password.contents.value[0:length]
-
+        if password.contents.value:
+            return password.contents.value[0:length]
+        return None
