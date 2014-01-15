@@ -12,5 +12,5 @@ Summary:
 TODO
 ----
 
-- *Replace* old cached response
 - Better fuzzy matching
+- Handle authentication failure

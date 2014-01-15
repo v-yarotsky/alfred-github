@@ -32,7 +32,7 @@ class FeedbackItem(object):
     self.arg = arg
     self.valid = valid
 
-def store(volatile=True):
+def store(item_path, volatile=True):
     path = {
         True: '~/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data',
         False: '~/Library/Application Support/Alfred 2/Workflow Data'
@@ -40,5 +40,5 @@ def store(volatile=True):
     store_path = os.path.join(os.path.expanduser(path), bundle_id)
     if not os.path.isdir(store_path):
       os.mkdir(store_path)
-    return store_path
+    return os.path.join(store_path, item_path)
 

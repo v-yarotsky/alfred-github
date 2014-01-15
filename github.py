@@ -2,11 +2,12 @@
 
 import itertools
 import alfred
-
+import github_api
 from argparse import ArgumentParser
-from github_api import Request
 from util import *
 from fuzzy_matching import fuzzy_match
+from keychain import Keychain
+import gui
 
 parser = ArgumentParser()
 parser.add_argument('-l', '--lazy', help='get repos only from cache', action='store_true')
@@ -14,26 +15,31 @@ parser.add_argument('--debug', help='show debug messages', action='store_true')
 parser.add_argument('query', help='get repos only from cache', nargs='?')
 args = parser.parse_args()
 
-github_api = Request(lazy=args.lazy, debug=args.debug)
+keychain = Keychain('Alfred Github')
+token = keychain.get_password('Alfred Github')
 
-def get_orgs():
-  return github_api.request('/user/orgs')
+if not token:
+  print("Authorizing")
+  github_username = gui.input_box("Github username")
+  github_password = gui.input_box("Github password")
 
-def get_org_repos(org):
-  return github_api.request('/orgs/' + org + '/repos?per_page=100')
+  token = github_api.authorize(username=github_username,
+                               password=github_password,
+                               client_id=alfred.preferences['github_api']['client_id'],
+                               client_secret=alfred.preferences['github_api']['client_secret'],
+                               scopes=['repo'],
+                               note='Alfred Github extension')
+  keychain.store_password('Alfred Github', token)
 
-def get_own_repos():
-  return github_api.request('/user/repos?per_page=100')
+
+gh = github_api.AuthenticatedGithub(token, lazy=args.lazy, debug=args.debug)
 
 def get_all_repos():
-  orgs = get_orgs()
+  orgs = gh.get_orgs()
   org_names = pluck(orgs, 'login')
-  org_repos = flatten(get_org_repos(org) for org in org_names)
-  own_repos = get_own_repos()
+  org_repos = flatten(gh.get_org_repos(org) for org in org_names)
+  own_repos = gh.get_own_repos()
   return itertools.chain(org_repos, own_repos)
-
-#import pprint
-#pprint.PrettyPrinter(indent=2).pprint(get_org_repos('ProductMadness')[0])
 
 all_repos = get_all_repos()
 
