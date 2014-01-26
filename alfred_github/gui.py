@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from Cocoa import *
-from Foundation import *
+from Cocoa import NSAlert, NSTextField
+from Foundation import NSString, NSMakeRect
 
 def input_box(title):
     box = NSAlert.alloc().init()
