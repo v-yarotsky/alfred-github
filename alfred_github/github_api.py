@@ -31,8 +31,8 @@ class RequestCache(object):
     def set_cache(self, req, etag, contents):
         self.cursor.execute("""
             INSERT OR REPLACE INTO requests(request, etag, contents)
-                VALUES (?, ?, ?)', [req, etag, contents])
-            """)
+                VALUES (?, ?, ?)
+            """, [req, etag, contents])
         self.connection.commit()
 
 class PlainRequest(object):
